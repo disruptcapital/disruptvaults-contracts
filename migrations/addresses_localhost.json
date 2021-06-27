@@ -1,0 +1,15 @@
+{
+    "cake": "0xB380dEBB27120338A2566bC25ba76B0c85d48a0E",
+    "busd": "",
+    "tusk": "",
+    "wbnb": "",
+    "tusk_bnb": "",
+	"cake_btd": "0x4ed230c03ac3700c991c31bee19af230974ea92e",
+    "gasprice": "0x17B00503f5a563D64BDfdbbC7B110F1ED90685a7",
+    "pancakeswapV2": "0x0e38DF411EDDD96395634Ef38B97799c4d2994ec",
+    "pancakeswapV1": "0x0e38DF411EDDD96395634Ef38B97799c4d2994ec",
+	"pancakeFactory": "0xFc8cf166Fc8367a444b32C05650F180C3bA4042B",
+    "strategyOwner": "0xCa0F5015514160eFe70024C0e4EB34124f376C1d",
+	"fakeBTD": "0x6B21F6c9b54ebA9cfB6b1680f655f5aB0321c83C",
+	"blizzardFarm": "0x25366A9E6f30555E67d85C305da9c8Fc817B9834"
+}

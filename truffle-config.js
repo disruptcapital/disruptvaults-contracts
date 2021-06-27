@@ -1,3 +1,6 @@
+require('dotenv').config();
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -23,7 +26,6 @@
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
-
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -35,7 +37,46 @@ module.exports = {
    * $ truffle test --network <network-name>
    */
 
+
+
+
+ migrations_directory: "./migrations/Tusk/TUSK-BNB/autocompounding",
+ //migrations_directory: "./migrations/GasPrice",
+
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+  api_keys: {
+    etherscan: process.env.etherscan
+  },
   networks: {
+    testnet: {
+      provider: () =>
+      new HDWalletProvider(process.env.testnet_mnemonic, "https://data-seed-prebsc-1-s1.binance.org:8545/", 0),
+      network_id: 97,
+      confirmations: 10,
+      timeoutBlocks: 200,
+      skipDryRun: true,
+      gas: 6721975,
+      gasPrice: 10000000000
+    },
+    mainnet: {
+      provider: () =>
+      new HDWalletProvider(process.env.mainnet_mnemonic, "https://bsc-dataseed.binance.org/", 0),      
+      network_id: 56,
+      confirmations: 10,
+      timeoutBlocks: 200,
+      skipDryRun: true,
+      gas: 6721975, 
+      gasPrice: 5000000000
+    },
+    localhost: {
+       provider: () =>
+      new HDWalletProvider(process.env.mainnet_mnemonic,"http://127.0.0.1:8545",0),
+      network_id: "*",
+      gas: 6721970,
+    }
+
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
     // You should run a client (like ganache-cli, geth or parity) in a separate terminal
@@ -82,15 +123,15 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.8.4",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.7.4",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
-      // settings: {          // See the solidity docs for advice about optimization and evmVersion
-      //  optimizer: {
-      //    enabled: false,
-      //    runs: 200
-      //  },
+       settings: {          // See the solidity docs for advice about optimization and evmVersion
+        optimizer: {
+          enabled: false,
+          runs: 200
+        }
       //  evmVersion: "byzantium"
-      // }
+       }
     }
   }
 };
