@@ -6,35 +6,33 @@ import "./FeeManager.sol";
 import "./GasThrottler.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
-import "../ISmartYeti.sol";
+import "../IRabbitBank.sol";
+import "../Rabbit/IFairLaunch.sol";
 import "../IUniswapRouterETH.sol";
 import "../IPancakePair.sol";
 import "hardhat/console.sol";
-
+import "../IRabbitBank.sol";
 /**
  * @dev Implementation of a strategy to get yields from farming LP Pools in Blizzard.Money.
  *
  * This strat is currently compatible with all LP pools.
  */
-contract StrategyBlizzardLP is StratManager, FeeManager, GasThrottler {
+contract StrategyRabbitVault is StratManager, FeeManager, GasThrottler {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 
     // Tokens used
     address public wbnb;
-    address public busd;
     address public output;
     address public want;
-    address public lpToken0;
-    address public lpToken1;
-
-    // Third party contracts
-    address public masterchef;
+	address public ibToken;
+	address public rabbitVault;
+	address public rabbitStaking;
+	uint256 public pid;
 
     // Routes
     address[] public outputToWbnbRoute;
-    address[] public outputToLp0Route;
-    address[] public outputToLp1Route;
+    address[] public outputToInputRoute;
 
     /**
     * @dev Event that is fired each time someone harvests the strat.
@@ -50,50 +48,65 @@ contract StrategyBlizzardLP is StratManager, FeeManager, GasThrottler {
         address _unirouter,
         address _keeper,
         address _feeRecipient,
-		address _masterChef,
+		address _rabbitVault,
+		address _rabbitStaking,
 		address _wbnb,
-		address _tusk,
-		address _busd,
-		address _gasPrice
+		address _output,
+		address _gasPrice,
+		address _ibToken,
+		uint256 _pid
+		
     ) StratManager(_keeper,  _unirouter, _vault, _feeRecipient)
 	  GasThrottler(_gasPrice)
 	 public {
         want = _want;
-		masterchef = _masterChef;
-		output = _tusk;
+		output = _output;
 		wbnb = _wbnb;
-		busd = _busd;
-        lpToken0 = IPancakePair(want).token0();
-        lpToken1 = IPancakePair(want).token1();
+		ibToken = _ibToken;
 		outputToWbnbRoute = [output, wbnb];
-       
-	    if (lpToken0 == wbnb) {
-            outputToLp0Route = [output, wbnb];
-        } else if (lpToken0 == busd) {
-            outputToLp0Route = [output, busd];
-        } else if (lpToken0 != output) {
-            outputToLp0Route = [output, wbnb, lpToken0];
-        }
-
-        if (lpToken1 == wbnb) {
-            outputToLp1Route = [output, wbnb];
-        } else if (lpToken1 == busd) {
-            outputToLp1Route = [output, busd];
-        } else if (lpToken1 != output) {
-            outputToLp1Route = [output, wbnb, lpToken1];
-        }
-
+		outputToInputRoute = [output, wbnb, want];
+		rabbitStaking = _rabbitStaking;
+		rabbitVault = _rabbitVault;
+		pid = _pid;
         _giveAllowances();
     }
 
     // Puts the funds to work
     function deposit() public whenNotPaused {
         uint256 pairBal = IERC20(want).balanceOf(address(this));
-
+		console.log("strat depositing %s", pairBal);
         if (pairBal > 0) {
-            ISmartYeti(masterchef).deposit(pairBal);
+            IRabbitBank(rabbitVault).deposit(want, pairBal);			
         }
+
+		uint256 ibTokenBalance = IERC20(ibToken).balanceOf(address(this));
+         if (ibTokenBalance > 0) {
+			console.log("strat depositing to fairlaunch %s", ibTokenBalance);
+            IFairLaunch(rabbitStaking).deposit(address(this), pid, ibTokenBalance);	
+
+			uint256 pricePerFullShare = getPricePerFullShare();
+			console.log("pricePerFullShare %s", pricePerFullShare);
+			// How much in fairlaunch
+
+			(uint256 amount, uint256 rewardDebt, uint256 bonusDebt, address fundedBy) = IFairLaunch(rabbitStaking).userInfo(pid, address(this));
+			uint256 userAmount = IFairLaunch(rabbitStaking).getUserAmount(address(this));
+			uint256 balance = balanceOf();
+
+			console.log("balance %s", balance);
+			console.log("amount %s", amount);
+			console.log("userAmount %s", userAmount);
+		}
     }
+
+	function wantToIBToken(uint256 _amount) public view 
+		returns (uint256)
+	{
+		(,,,,,uint256 wantTotalToken,,,,) = IRabbitBank(rabbitVault).banks(want);
+        uint256 ibTotal = IERC20(ibToken).totalSupply();
+        uint256 ibAmount = (wantTotalToken == 0 || wantTotalToken == 0) ? _amount: _amount.mul(ibTotal).div(wantTotalToken);
+	
+		return ibAmount;
+	}
 
     /**
      * @dev Withdraws funds and sends them back to the vault.
@@ -103,39 +116,43 @@ contract StrategyBlizzardLP is StratManager, FeeManager, GasThrottler {
      */
     function withdraw(uint256 _amount) external {
         require(msg.sender == vault, "!vault");
+		console.log("strat withdraw %s", _amount);
+		uint256 ibTokensToWithdraw = wantToIBToken(_amount);
+		console.log("ibTokensToWithdraw: %s", ibTokensToWithdraw);
 
-        uint256 pairBal = IERC20(want).balanceOf(address(this));
+        uint256 ibTokensInContract = IERC20(ibToken).balanceOf(address(this));
 
-        if (pairBal < _amount) {
-            ISmartYeti(masterchef).withdraw(_amount.sub(pairBal));
-            pairBal = IERC20(want).balanceOf(address(this));
+		// If not enough IB Tokens in contract, remove some from farm
+        if (ibTokensInContract < _amount) {
+            IFairLaunch(rabbitStaking).withdraw(address(this), pid, ibTokensToWithdraw.sub(ibTokensInContract));			
+            ibTokensInContract = IERC20(want).balanceOf(address(this));
         }
 
-        if (pairBal > _amount) {
-            pairBal = _amount;
+        if (ibTokensInContract > _amount) {
+            ibTokensInContract = _amount;
         }
 
-        if (tx.origin == owner() || paused()) {
-            IERC20(want).safeTransfer(vault, pairBal);
-        } else {
-            uint256 withdrawalFee = pairBal.mul(WITHDRAWAL_FEE).div(WITHDRAWAL_MAX);
-            IERC20(want).safeTransfer(vault, pairBal.sub(withdrawalFee));
-        }
+		// Swap ib Tokens for want tokens
+		IRabbitBank(rabbitVault).withdraw(want, ibTokensInContract);
+		IERC20(want).safeTransfer(vault, _amount);        
     }
 
     /**
      * @dev Public harvest. Doesn't work when the strat is paused.
      */
     function harvest() external whenNotPaused onlyEOA gasThrottle {
-        ISmartYeti(masterchef).deposit(0);
+        IFairLaunch(rabbitStaking).deposit(ibToken, pid, 0);
         chargeFees();
-        addLiquidity();
+		compound();
         deposit();
 
         emit StratHarvest(msg.sender);
     }
 
-
+	function compound() internal {
+		uint256 toWant = IERC20(output).balanceOf(address(this));
+		IUniswapRouterETH(unirouter).swapExactTokensForTokens(toWant, 0, outputToInputRoute, address(this), block.timestamp);
+	}
 
     // Performance fees
     function chargeFees() internal {
@@ -155,23 +172,6 @@ contract StrategyBlizzardLP is StratManager, FeeManager, GasThrottler {
 		console.log("feeAmount: %s", feeAmount);
     }
 
-    // Adds liquidity to AMM and gets more LP tokens.
-    function addLiquidity() internal {
-        uint256 outputHalf = IERC20(output).balanceOf(address(this)).div(2);
-
-        if (lpToken0 != output) {
-            IUniswapRouterETH(unirouter).swapExactTokensForTokens(outputHalf, 0, outputToLp0Route, address(this), block.timestamp);
-        }
-
-        if (lpToken1 != output) {
-            IUniswapRouterETH(unirouter).swapExactTokensForTokens(outputHalf, 0, outputToLp1Route, address(this), block.timestamp);
-        }
-
-        uint256 lp0Bal = IERC20(lpToken0).balanceOf(address(this));
-        uint256 lp1Bal = IERC20(lpToken1).balanceOf(address(this));
-        IUniswapRouterETH(unirouter).addLiquidity(lpToken0, lpToken1, lp0Bal, lp1Bal, 1, 1, address(this), block.timestamp);
-    }
-
     // calculate the total underlaying 'want' held by the strat.
     function balanceOf() public view returns (uint256) {
         return balanceOfWant().add(balanceOfPool());
@@ -184,15 +184,27 @@ contract StrategyBlizzardLP is StratManager, FeeManager, GasThrottler {
 
     // it calculates how much 'want' the strategy has working in the farm.
     function balanceOfPool() public view returns (uint256) {
-        (uint256 _amount, ) = ISmartYeti(masterchef).userInfo(address(this));
-        return _amount;
+
+		uint256 totalIbTokens = IERC20(ibToken).totalSupply();		
+		(uint256 amount, ,, ) = IFairLaunch(rabbitStaking).userInfo(pid, address(this));
+		(, , ,  ,  ,  uint256 totalVal, uint256 totalDebt , , uint256 totalReserve,) = IRabbitBank(rabbitVault).banks(want);
+		uint256 totalWant = totalVal.add(totalReserve).sub(totalDebt);
+		uint256 balanceOfPool = totalIbTokens == 0 ? 0 : amount.div(totalIbTokens).mul(totalWant);       
+
+
+		return 	balanceOfPool;
+    }
+
+    function getPricePerFullShare() public view returns (uint256) {
+		uint256 totalIBSupply = IERC20(ibToken).totalSupply();
+        return totalIBSupply == 0 ? 1e18 : IRabbitBank(rabbitVault).totalToken(want).mul(1e18).div(totalIBSupply);
     }
 
     // called as part of strat migration. Sends all the available funds back to the vault.
     function retireStrat() external {
         require(msg.sender == vault, "!vault");
 
-        ISmartYeti(masterchef).emergencyWithdraw();
+        // IRabbitVault(rabbitStaking).emergencyWithdraw();
 
         uint256 pairBal = IERC20(want).balanceOf(address(this));
         IERC20(want).transfer(vault, pairBal);
@@ -201,7 +213,7 @@ contract StrategyBlizzardLP is StratManager, FeeManager, GasThrottler {
     // pauses deposits and withdraws all funds from third party systems.
     function panic() public onlyManager {
         pause();
-        ISmartYeti(masterchef).emergencyWithdraw();
+       // IRabbitVault(rabbitStaking).emergencyWithdraw();
     }
 
     // temporarily pauses the strategy
@@ -222,20 +234,14 @@ contract StrategyBlizzardLP is StratManager, FeeManager, GasThrottler {
 
     function _giveAllowances() internal {
 		// console.log(masterchef);
-        IERC20(want).safeApprove(masterchef, type(uint256).max);
+        IERC20(want).safeApprove(rabbitVault, type(uint256).max);
+		IERC20(ibToken).safeApprove(rabbitStaking, type(uint256).max);
         IERC20(output).safeApprove(unirouter, type(uint256).max);
-
-        IERC20(lpToken0).safeApprove(unirouter, 0);
-        IERC20(lpToken0).safeApprove(unirouter, type(uint256).max);
-
-        IERC20(lpToken1).safeApprove(unirouter, 0);
-        IERC20(lpToken1).safeApprove(unirouter, type(uint256).max);
     }
 
     function _removeAllowances() internal {
-        IERC20(want).safeApprove(masterchef, 0);
+        IERC20(want).safeApprove(rabbitVault, 0);
+		IERC20(ibToken).safeApprove(rabbitStaking, 0);
         IERC20(output).safeApprove(unirouter, 0);
-        IERC20(lpToken0).safeApprove(unirouter, 0);
-        IERC20(lpToken1).safeApprove(unirouter, 0);
     }
 }

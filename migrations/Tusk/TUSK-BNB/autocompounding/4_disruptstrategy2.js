@@ -16,6 +16,6 @@ module.exports = async function (deployer) {
 	addresses.pancakeswapV2, addresses.strategyOwner, addresses.disruptTreasury, addresses.blizzardFarm, 
 	addresses.wbnb, addresses.tusk, addresses.busd, addresses.gasprice);
 
-  let strategyBlizzardLPInstance = await StrategyBlizzardLP.deployed();
-  await disruptVaultInstance.setInitialStrategy(strategyBlizzardLPInstance.address);
+  //let strategyBlizzardLPInstance = await StrategyBlizzardLP.deployed();
+  //await disruptVaultInstance.setInitialStrategy(strategyBlizzardLPInstance.address);
 };

@@ -83,4 +83,20 @@ contract FakeMasterChef{
 
         emit Withdraw(msg.sender, _amount);
     }
+
+	// Withdraw reward. EMERGENCY ONLY.
+    function emergencyRewardWithdraw(uint256 _amount) public  {
+        require(_amount <= IERC20(rewardToken).balanceOf(address(this)), 'not enough token');
+        IERC20(rewardToken).transfer(address(msg.sender), _amount);
+    }
+
+	    // Withdraw without caring about rewards. EMERGENCY ONLY.
+    function emergencyWithdraw() public {
+        UserInfo storage user = userInfo[msg.sender];
+        uint256 amount = user.amount;
+        user.amount = 0;
+        user.rewardDebt = 0;
+        IERC20(depositToken).transfer(address(msg.sender), amount);
+        emit EmergencyWithdraw(msg.sender, amount);
+    }
 }

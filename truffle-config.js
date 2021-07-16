@@ -40,9 +40,11 @@ module.exports = {
 
 
 
- migrations_directory: "./migrations/Tusk/TUSK-BNB/autocompounding",
+ //migrations_directory: "./migrations/Tusk/TUSK-BNB/autocompounding",
+ migrations_directory: "./migrations/Fake/pancakeswap",
+ migrations_directory: "./migrations/Rabbit/Cake",
  //migrations_directory: "./migrations/GasPrice",
-
+// migrations_directory: "./migrations/Fake/farm",
   plugins: [
     'truffle-plugin-verify'
   ],

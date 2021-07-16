@@ -11,6 +11,7 @@ describe("BaseStrategy", function () {
 	let fakeTuskWBNB;
 	let disruptVault;
 	let blizzardLPStrategy;
+	let blizzardLPStrategy2;
 	let fakeTusk;
 	let fakeMasterChef;
 	beforeEach(async () => {
@@ -46,6 +47,8 @@ describe("BaseStrategy", function () {
 		 const BlizzardLPStrategyFactory = await ethers.getContractFactory("StrategyBlizzardLP");
 		 blizzardLPStrategy = await BlizzardLPStrategyFactory.deploy(fakeTuskWBNB.address, disruptVault.address, fakePancakeRouter.address, owner.address, owner.address, fakeMasterChef.address,
 			fakeWBNB.address, fakeTusk.address, fakeBusd.address, gasPrice.address);
+		blizzardLPStrategy2 = await BlizzardLPStrategyFactory.deploy(fakeTuskWBNB.address, disruptVault.address, fakePancakeRouter.address, owner.address, owner.address, fakeMasterChef.address,
+			fakeWBNB.address, fakeTusk.address, fakeBusd.address, gasPrice.address);
 
 			await disruptVault.setInitialStrategy(blizzardLPStrategy.address);
 			await fakeTusk.mint(fakeMasterChef.address, BigNumber.from("10000000000000000000000"));
@@ -56,6 +59,7 @@ describe("BaseStrategy", function () {
 			await fakeTuskWBNB.approve(disruptVault.address, BigNumber.from("10000000000000000000000"));
 			
 			await fakePancakeRouter.mapTokens(await fakeTuskWBNB.token0(),await fakeTuskWBNB.token1(), fakeTuskWBNB.address);
+
 		});
 
 	it("Should just work", async () => {
@@ -67,6 +71,30 @@ describe("BaseStrategy", function () {
 	 	var masterChefLPBalance = await fakeTuskWBNB.balanceOf(fakeMasterChef.address);
 
 		 console.log("masterChefLPBalance: %s", masterChefLPBalance.toString());
+	});
+
+	it("Migration works", async () => {
+
+		await disruptVault.deposit(BigNumber.from("1000000"));
+		
+		let strat1LPTokenBeforeBalance = (await fakeMasterChef.userInfo(blizzardLPStrategy.address)).amount;
+		let strat2LPTokenBeforeBalance = (await fakeMasterChef.userInfo(blizzardLPStrategy2.address)).amount;
+		let stratBefore = await disruptVault.strategy();
+		await disruptVault.proposeStrat(blizzardLPStrategy2.address);
+		await disruptVault.upgradeStrat();
+
+		let strat1LPTokenAfterBalance = (await fakeMasterChef.userInfo(blizzardLPStrategy.address)).amount;
+		let strat2LPTokenAfterBalance = (await fakeMasterChef.userInfo(blizzardLPStrategy2.address)).amount;
+		let stratAfter = await disruptVault.strategy();
+
+		expect(strat1LPTokenBeforeBalance).to.equal(1000000);
+		expect(strat2LPTokenBeforeBalance).to.equal(0);
+
+		expect(strat1LPTokenAfterBalance).to.equal(0);
+		expect(strat2LPTokenAfterBalance).to.equal(1000000);
+
+		expect(stratAfter).to.equal(blizzardLPStrategy2.address);
+
 	})
 });
 

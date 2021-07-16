@@ -3,7 +3,7 @@ const FakeMasterChef = artifacts.require("../../../contracts/Fakes/FakeMasterChe
 
 
 module.exports = async function (deployer) {
-  await deployer.deploy(FakeMasterChef, addresses.cake_btd, addresses.cake);
+  await deployer.deploy(FakeMasterChef, addresses.tusk_bnb, addresses.tusk);
 };
 
 

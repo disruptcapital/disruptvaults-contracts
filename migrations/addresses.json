@@ -9,5 +9,10 @@
     "pancakeswapV1": "0x05fF2B0DB69458A0750badebc4f9e13aDd608C7F",
     "strategyOwner": "0xA41e36BBC936B429aDc7fDA1B61F2Ef17f1AD3a8",
     "disruptTreasury": "0x2c81Ce18b040744D00d24c8D4b1F1E17C0b137cB",
-	"blizzardFarm": "0xf51929536664b3D9373A1b2bf7Bab83DEe4869d0"
+	"blizzardFarm": "0xf51929536664b3D9373A1b2bf7Bab83DEe4869d0",
+	"rabbit": "0x95a1199EBA84ac5f19546519e287d43D2F0E1b41",
+	"rabbitBank": "0xc18907269640D11E2A91D7204f33C5115Ce3419e",
+	"rabbitFairLaunch": "0x81C1e8A6f8eB226aA7458744c5e12Fc338746571", 
+	"ibCake": "0xf33c4df340b4173f1cbf19fecfb5dcbd9d3e04e7",
+	"rabbitIBCakePID": 18
 }

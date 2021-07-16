@@ -1,0 +1,1720 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Compounding\\DisruptVault.sol": {
+      "lastModificationDate": 1626321213365,
+      "contentHash": "63437b14fd1618d96a938e64cb163e26",
+      "sourceName": "contracts/Compounding/DisruptVault.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/math/SafeMath.sol",
+        "@openzeppelin/contracts/math/Math.sol",
+        "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
+        "./IStrategy.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "DisruptVault"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\node_modules\\@openzeppelin\\contracts\\access\\Ownable.sol": {
+      "lastModificationDate": 1624764451825,
+      "contentHash": "6748815a5b45c4aeeda56819f41190e0",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\SafeERC20.sol": {
+      "lastModificationDate": 1624764451835,
+      "contentHash": "33e22842646d746e5c4124c2fdc051aa",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol",
+        "../../math/SafeMath.sol",
+        "../../utils/Address.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "SafeERC20"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
+      "lastModificationDate": 1624764451812,
+      "contentHash": "e0a41531d159d3a32f84b7a3ecf9fabb",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol": {
+      "lastModificationDate": 1624764451782,
+      "contentHash": "8065b340476f61365c076897199425f1",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/Context.sol",
+        "./IERC20.sol",
+        "../../math/SafeMath.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "ERC20"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\node_modules\\@openzeppelin\\contracts\\math\\SafeMath.sol": {
+      "lastModificationDate": 1624764451837,
+      "contentHash": "e03e12206057e809eb76c5f681170c32",
+      "sourceName": "@openzeppelin/contracts/math/SafeMath.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "SafeMath"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\node_modules\\@openzeppelin\\contracts\\math\\Math.sol": {
+      "lastModificationDate": 1624764451823,
+      "contentHash": "e5c844515b04deabacef7eb872abc384",
+      "sourceName": "@openzeppelin/contracts/math/Math.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "Math"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\node_modules\\@openzeppelin\\contracts\\utils\\ReentrancyGuard.sol": {
+      "lastModificationDate": 1624764451831,
+      "contentHash": "1c60f58cee45c61469e1aea31e4dd879",
+      "sourceName": "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "ReentrancyGuard"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Compounding\\IStrategy.sol": {
+      "lastModificationDate": 1624765643326,
+      "contentHash": "6b1997b5bc040b1c55c2bbdff5c6d359",
+      "sourceName": "contracts/Compounding/IStrategy.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IStrategy"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\node_modules\\hardhat\\console.sol": {
+      "lastModificationDate": 1624431011751,
+      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
+      "sourceName": "hardhat/console.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
+      "lastModificationDate": 1624764451771,
+      "contentHash": "2adbd82f6d055a4751566d4671512b03",
+      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "Context"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\node_modules\\@openzeppelin\\contracts\\utils\\Address.sol": {
+      "lastModificationDate": 1624764451764,
+      "contentHash": "7aa46886ff5abe7515496208a5e2ce5a",
+      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.2 <0.8.0"
+      ],
+      "artifacts": [
+        "Address"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Fakes\\FakeMasterChef.sol": {
+      "lastModificationDate": 1625150553791,
+      "contentHash": "1e02b2e35c2392de475d030f09b2ba11",
+      "sourceName": "contracts/Fakes/FakeMasterChef.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/math/SafeMath.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "FakeMasterChef"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Fakes\\FakeSmartChef.sol": {
+      "lastModificationDate": 1624765559157,
+      "contentHash": "445aee509bebd3c2b27749d0ee9789dc",
+      "sourceName": "contracts/Fakes/FakeSmartChef.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/math/SafeMath.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "FakeSmartChef"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Fakes\\FakePancakeRouter.sol": {
+      "lastModificationDate": 1625245336406,
+      "contentHash": "0135cecbdcc16b71a4cb066383e31e9c",
+      "sourceName": "contracts/Fakes/FakePancakeRouter.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/math/SafeMath.sol",
+        "../IUniswapRouterETH.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "FakePancakeRouter"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\IUniswapRouterETH.sol": {
+      "lastModificationDate": 1624765643331,
+      "contentHash": "0a3bbb5db77e364ab839ffcf1e266438",
+      "sourceName": "contracts/IUniswapRouterETH.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IUniswapRouterETH"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Compounding\\StrategyBlizzardLP.sol": {
+      "lastModificationDate": 1625150382554,
+      "contentHash": "aa08ab9c64ce30c65befcdc9958a74e1",
+      "sourceName": "contracts/Compounding/StrategyBlizzardLP.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./StratManager.sol",
+        "./FeeManager.sol",
+        "./GasThrottler.sol",
+        "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+        "@openzeppelin/contracts/math/SafeMath.sol",
+        "../ISmartYeti.sol",
+        "../IUniswapRouterETH.sol",
+        "../IPancakePair.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "StrategyBlizzardLP"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Compounding\\StratManager.sol": {
+      "lastModificationDate": 1624765559157,
+      "contentHash": "f2fda86fb718acab8337888f211db8da",
+      "sourceName": "contracts/Compounding/StratManager.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/utils/Pausable.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "StratManager"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Compounding\\FeeManager.sol": {
+      "lastModificationDate": 1624933965978,
+      "contentHash": "919cd06612d97c9bffd5545f7c58f71d",
+      "sourceName": "contracts/Compounding/FeeManager.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./StratManager.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "FeeManager"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Compounding\\GasThrottler.sol": {
+      "lastModificationDate": 1624773719557,
+      "contentHash": "54889ca15c4187b5f3be5e8c13de182d",
+      "sourceName": "contracts/Compounding/GasThrottler.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IGasPrice.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "GasThrottler"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\ISmartYeti.sol": {
+      "lastModificationDate": 1624765643326,
+      "contentHash": "a7d4647aab0ea77f511895b50557c49a",
+      "sourceName": "contracts/ISmartYeti.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "ISmartYeti"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\IPancakePair.sol": {
+      "lastModificationDate": 1624765643331,
+      "contentHash": "e219279863ecf5fae89dfc40ae99d327",
+      "sourceName": "contracts/IPancakePair.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IPancakePair"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\node_modules\\@openzeppelin\\contracts\\utils\\Pausable.sol": {
+      "lastModificationDate": 1624764451826,
+      "contentHash": "6960b40911542e6004ab95031ef9c3b9",
+      "sourceName": "@openzeppelin/contracts/utils/Pausable.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Context.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "Pausable"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Compounding\\IGasPrice.sol": {
+      "lastModificationDate": 1624765559157,
+      "contentHash": "9083268a402d1c003f2c11861c46421a",
+      "sourceName": "contracts/Compounding/IGasPrice.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IGasPrice"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Fakes\\FakeDisruptVault.sol": {
+      "lastModificationDate": 1624765643326,
+      "contentHash": "0a65720afde55cbe19961dec104b74f1",
+      "sourceName": "contracts/Fakes/FakeDisruptVault.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/math/SafeMath.sol",
+        "../Compounding/IStrategy.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "FakeDisruptVault"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\GasPrice\\GasPrice.sol": {
+      "lastModificationDate": 1624773885337,
+      "contentHash": "9aa8fb36fb43b9119ede238f8f453ead",
+      "sourceName": "contracts/GasPrice/GasPrice.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "GasPrice"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Governable.sol": {
+      "lastModificationDate": 1624765559158,
+      "contentHash": "4c53184696ac72348ff336e78cb3e3bc",
+      "sourceName": "contracts/Governable.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "Governable"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Fakes\\FakeWBNB.sol": {
+      "lastModificationDate": 1624765559172,
+      "contentHash": "91e3a34b124a2bbae92e3ff15d2c2a28",
+      "sourceName": "contracts/Fakes/FakeWBNB.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "FakeWBNB"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Fakes\\FakeTuskWBNB.sol": {
+      "lastModificationDate": 1624765559157,
+      "contentHash": "ae82bced993510eb6fc67f25ba027ff6",
+      "sourceName": "contracts/Fakes/FakeTuskWBNB.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "FakeTuskWBNB"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Fakes\\FakeTusk.sol": {
+      "lastModificationDate": 1624765559157,
+      "contentHash": "b275dce3f5a0721c51fb9af52fce6806",
+      "sourceName": "contracts/Fakes/FakeTusk.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "FakeTusk"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Fakes\\FakeBusd.sol": {
+      "lastModificationDate": 1624765559157,
+      "contentHash": "7df7c87e66658c2dba01ffae43261cbe",
+      "sourceName": "contracts/Fakes/FakeBusd.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "FakeBusd"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\IDisruptStrategy.sol": {
+      "lastModificationDate": 1624765643331,
+      "contentHash": "a64517140ff22572d24e348931d6c53f",
+      "sourceName": "contracts/IDisruptStrategy.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IDisruptStrategy"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\IPancakeRouter01.sol": {
+      "lastModificationDate": 1624765643326,
+      "contentHash": "372e9e8707c5037a4ec2d7568e7c2df3",
+      "sourceName": "contracts/IPancakeRouter01.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IPancakeRouter01"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\IPancakeRouter02.sol": {
+      "lastModificationDate": 1624765643326,
+      "contentHash": "e7d25aa4d6ee0947ba425eef9c3cc700",
+      "sourceName": "contracts/IPancakeRouter02.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IPancakeRouter01.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IPancakeRouter02"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\IUniswapRouter.sol": {
+      "lastModificationDate": 1624765643331,
+      "contentHash": "c7f3a3a3ee4f5c211be09776fe5a79d7",
+      "sourceName": "contracts/IUniswapRouter.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IUniswapRouter"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Migrations.sol": {
+      "lastModificationDate": 1614199917330,
+      "contentHash": "50b3b1dc92806dc8f604fc8c5c65518f",
+      "sourceName": "contracts/Migrations.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "Migrations"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Compounding\\StrategyRabbitVault.sol": {
+      "lastModificationDate": 1626325077533,
+      "contentHash": "372abff4106c7e00c1ac7b50ccd76397",
+      "sourceName": "contracts/Compounding/StrategyRabbitVault.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./StratManager.sol",
+        "./FeeManager.sol",
+        "./GasThrottler.sol",
+        "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+        "@openzeppelin/contracts/math/SafeMath.sol",
+        "../IRabbitBank.sol",
+        "../Rabbit/IFairLaunch.sol",
+        "../IUniswapRouterETH.sol",
+        "../IPancakePair.sol",
+        "hardhat/console.sol",
+        "../IRabbitBank.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "StrategyRabbitVault"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Rabbit\\FairLaunch.sol": {
+      "lastModificationDate": 1626292227216,
+      "contentHash": "a26a1d708afb70332020323c51d4e90b",
+      "sourceName": "contracts/Rabbit/FairLaunch.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../Fakes/IRabbit.sol",
+        "./IFairLaunch.sol",
+        "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/math/SafeMath.sol",
+        "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "FairLaunch"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Fakes\\IRabbit.sol": {
+      "lastModificationDate": 1626127175284,
+      "contentHash": "d1b05de07766ce1c8e1f8d69294cdb9e",
+      "sourceName": "contracts/Fakes/IRabbit.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IRabbit"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Rabbit\\IFairLaunch.sol": {
+      "lastModificationDate": 1626281369825,
+      "contentHash": "f81c729ec7b5c901db3ea211b24e56b3",
+      "sourceName": "contracts/Rabbit/IFairLaunch.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IFairLaunch"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Fakes\\Rabbit.sol": {
+      "lastModificationDate": 1626128308268,
+      "contentHash": "acabc81acaadcf84f33a51a8f98aa734",
+      "sourceName": "contracts/Fakes/Rabbit.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "./IRabbit.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "Rabbit"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Fakes\\FakeCake.sol": {
+      "lastModificationDate": 1626147190936,
+      "contentHash": "a3924290daecbd7d5700fd6531afbd31",
+      "sourceName": "contracts/Fakes/FakeCake.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "FakeCake"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\IRabbitBank.sol": {
+      "lastModificationDate": 1626292176548,
+      "contentHash": "b93a5cc65010cb1a15b7f185f13df632",
+      "sourceName": "contracts/IRabbitBank.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IRabbitBank"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Rabbit\\IBToken.sol": {
+      "lastModificationDate": 1626208029303,
+      "contentHash": "3429c86033606b08e26b12551168faa2",
+      "sourceName": "contracts/Rabbit/IBToken.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+        "@openzeppelin/contracts/math/SafeMath.sol",
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IBToken"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Rabbit\\IBTokenFactory.sol": {
+      "lastModificationDate": 1626151736853,
+      "contentHash": "8f0cc7f245bf45cc42e34c0615562d79",
+      "sourceName": "contracts/Rabbit/IBTokenFactory.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IBToken.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IBTokenFactory"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Rabbit\\Bank.sol": {
+      "lastModificationDate": 1626322184265,
+      "contentHash": "d41760463a0463eceb40e692d1ef9993",
+      "sourceName": "contracts/Rabbit/Bank.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+        "@openzeppelin/contracts/math/SafeMath.sol",
+        "./IBankConfig.sol",
+        "./IBTokenFactory.sol",
+        "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "Bank"
+      ]
+    },
+    "C:\\Users\\rick\\Documents\\projects\\ATS\\DisruptVaults\\DisruptVaults-contracts\\contracts\\Rabbit\\IBankConfig.sol": {
+      "lastModificationDate": 1626145747619,
+      "contentHash": "46592e18c04319e03d6e42c753e13045",
+      "sourceName": "contracts/Rabbit/IBankConfig.sol",
+      "solcConfig": {
+        "version": "0.7.4",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "IBankConfig"
+      ]
+    }
+  }
+}

@@ -4,7 +4,7 @@ pragma solidity ^0.7.0;
 import "./StratManager.sol";
 
 abstract contract FeeManager is StratManager {
-    // 1%
+
     uint constant public MAX_FEE = 1000;
     uint constant public MAX_CALL_FEE = 111;
 
@@ -13,7 +13,7 @@ abstract contract FeeManager is StratManager {
 
     uint public callFee = 111;
     uint public fee = MAX_FEE - callFee;
-
+    // 1%
     uint public totalFee = 10;
 
     function setTotalFee(uint256 _fee) external onlyManager

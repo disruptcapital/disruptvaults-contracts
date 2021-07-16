@@ -239,7 +239,7 @@ contract FakePancakeRouter //is IUniswapRouterETH
 
     function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut) external pure returns (uint amountOut)
 	{
-		return 0;
+		return amountIn;
 	}
 
     function getAmountIn(uint amountOut, uint reserveIn, uint reserveOut) external pure returns (uint amountIn)
@@ -249,8 +249,9 @@ contract FakePancakeRouter //is IUniswapRouterETH
 
     function getAmountsOut(uint amountIn, address[] calldata path) external view returns (uint[] memory amounts)
 	{
-		 uint[] memory ret ;
-		return  ret ;
+		amounts = new uint[](1);
+		amounts[0] = amountIn;
+		return  amounts ;
 	}
 
     function getAmountsIn(uint amountOut, address[] calldata path) external view returns (uint[] memory amounts)
