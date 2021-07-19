@@ -16,6 +16,9 @@ describe("RabbitStrategy", function () {
 	let fairLaunch;
 	let fakeCake;
 	let ibCake;
+	let bank;
+	let owner;
+	let user2;
 	beforeEach(async () => {
 
 		[owner, user2] = await ethers.getSigners();
@@ -47,7 +50,7 @@ describe("RabbitStrategy", function () {
 
 
 		const BankFactory = await ethers.getContractFactory("Bank");
-		let bank = await BankFactory.deploy();
+		bank = await BankFactory.deploy();
 		await bank.addBank(fakeCake.address, "ibCake");
 		let banks = await bank.banks(fakeCake.address);
 
@@ -75,60 +78,32 @@ describe("RabbitStrategy", function () {
 		fakeCake.approve(strategyRabbitVault.address, BigNumber.from("9000000000000000000"));
 	});
 
+
+
 	it("Balance of Pool is correct on deposit", async () => {
 		console.log("owner.address " + owner.address);
 		
 		await fakeCake.transfer(strategyRabbitVault.address, BigNumber.from("10000000000000000"));
 		await strategyRabbitVault.deposit();
 
-		await fakeCake.transfer(strategyRabbitVault.address, BigNumber.from("10000000000000001"));
-		await strategyRabbitVault.deposit();
+		// await fakeCake.transfer(strategyRabbitVault.address, BigNumber.from("20000000000000000"));
+		// await strategyRabbitVault.deposit();
 
+		
+		await fakeCake.mint(user2.address, BigNumber.from("30000000000000000"));
+		await fakeCake.connect(user2).approve(bank.address, BigNumber.from("100000000000000000000"));		
+		await ibCake.connect(user2).approve(fairLaunch.address, BigNumber.from("100000000000000000000"));	
+
+
+		await bank.connect(user2)
+			.deposit(fakeCake.address, BigNumber.from("30000000000000000") );
+		await fairLaunch.connect(user2)
+			.deposit(user2.address, 0, BigNumber.from("30000000000000000"))
+
+		console.log("==================== Testing balance ========================");
 		let balanceOfPool = await strategyRabbitVault.balanceOfPool();
-
-		expect(balanceOfPool).to.equal(BigNumber.from("20000000000000001"));
-
-				//await disruptVault.deposit(BigNumber.from("10000000000000000"));
-		// console.log("disruptVault: " + (await disruptVault.balanceOf(owner.address)).toString());
-		// let balanceOfPool = await strategyRabbitVault.balanceOfPool();
-		// console.log("balanceOfPool:%s", balanceOfPool.toString());
-		// expect((await disruptVault.balanceOf(owner.address)).gt(0)).to.true();
-		//await disruptVault.withdraw(disruptVault.balanceOf(owner.address));
-
-		//await blizzardLPStrategy.harvest();
-	 	//var masterChefLPBalance = await fakeTuskWBNB.balanceOf(fakeMasterChef.address);
-
-		// console.log("masterChefLPBalance: %s", masterChefLPBalance.toString());
-	});
-
-	it("Deposit to vault", async () => {
-
-		await disruptVault.deposit(BigNumber.from("10000000000000000"));
-		// console.log("disruptVault: " + (await disruptVault.balanceOf(owner.address)).toString());
-
-		// let balanceOfPool = await strategyRabbitVault.balanceOfPool();
-		// console.log("balanceOfPool:%s", balanceOfPool.toString());
-		// expect((await disruptVault.balanceOf(owner.address)).gt(0)).to.true();
-		// await disruptVault.withdraw(disruptVault.balanceOf(owner.address));
-
-		// await blizzardLPStrategy.harvest();
-		// var masterChefLPBalance = await fakeTuskWBNB.balanceOf(fakeMasterChef.address);
-
-		// console.log("masterChefLPBalance: %s", masterChefLPBalance.toString());
-	});
-
-	it("Withdraw only by vault", async () => {
-		console.log("owner.address " + owner.address);
-		
-		await fakeCake.transfer(strategyRabbitVault.address, BigNumber.from("10000000000000000"));
-		await strategyRabbitVault.deposit();
-		var throws =  () =>  {
-			throw new Error("shit");
-			//await strategyRabbitVault.withdraw(BigNumber.from("10000000000000000"));
-		}
-		
-
-		expect(throws).to.throw(Error, 'shit');
+		console.log("==================== Testing balance ========================");
+		expect(balanceOfPool).to.equal(BigNumber.from("10000000000000000"));
 
 				//await disruptVault.deposit(BigNumber.from("10000000000000000"));
 		// console.log("disruptVault: " + (await disruptVault.balanceOf(owner.address)).toString());
@@ -142,6 +117,48 @@ describe("RabbitStrategy", function () {
 
 		// console.log("masterChefLPBalance: %s", masterChefLPBalance.toString());
 	});
+
+	// it("Deposit to vault", async () => {
+
+	// 	await disruptVault.deposit(BigNumber.from("10000000000000000"));
+	// 	// console.log("disruptVault: " + (await disruptVault.balanceOf(owner.address)).toString());
+
+	// 	// let balanceOfPool = await strategyRabbitVault.balanceOfPool();
+	// 	// console.log("balanceOfPool:%s", balanceOfPool.toString());
+	// 	// expect((await disruptVault.balanceOf(owner.address)).gt(0)).to.true();
+	// 	// await disruptVault.withdraw(disruptVault.balanceOf(owner.address));
+
+	// 	// await blizzardLPStrategy.harvest();
+	// 	// var masterChefLPBalance = await fakeTuskWBNB.balanceOf(fakeMasterChef.address);
+
+	// 	// console.log("masterChefLPBalance: %s", masterChefLPBalance.toString());
+	// });
+
+	// it("Withdraw only by vault", async () => {
+	// 	console.log("owner.address " + owner.address);
+		
+	// 	await fakeCake.transfer(strategyRabbitVault.address, BigNumber.from("10000000000000000"));
+	// 	await strategyRabbitVault.deposit();
+	// 	var throws =  () =>  {
+	// 		throw new Error("shit");
+	// 		//await strategyRabbitVault.withdraw(BigNumber.from("10000000000000000"));
+	// 	}
+		
+
+	// 	expect(throws).to.throw(Error, 'shit');
+
+	// 			//await disruptVault.deposit(BigNumber.from("10000000000000000"));
+	// 	// console.log("disruptVault: " + (await disruptVault.balanceOf(owner.address)).toString());
+	// 	// let balanceOfPool = await strategyRabbitVault.balanceOfPool();
+	// 	// console.log("balanceOfPool:%s", balanceOfPool.toString());
+	// 	// expect((await disruptVault.balanceOf(owner.address)).gt(0)).to.true();
+	// 	//await disruptVault.withdraw(disruptVault.balanceOf(owner.address));
+
+	// 	//await blizzardLPStrategy.harvest();
+	//  	//var masterChefLPBalance = await fakeTuskWBNB.balanceOf(fakeMasterChef.address);
+
+	// 	// console.log("masterChefLPBalance: %s", masterChefLPBalance.toString());
+	// });
 
 	// it("Migration works", async () => {
 

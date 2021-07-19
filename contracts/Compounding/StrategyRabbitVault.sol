@@ -83,18 +83,6 @@ contract StrategyRabbitVault is StratManager, FeeManager, GasThrottler {
          if (ibTokenBalance > 0) {
 			console.log("strat depositing to fairlaunch %s", ibTokenBalance);
             IFairLaunch(rabbitStaking).deposit(address(this), pid, ibTokenBalance);	
-
-			uint256 pricePerFullShare = getPricePerFullShare();
-			console.log("pricePerFullShare %s", pricePerFullShare);
-			// How much in fairlaunch
-
-			(uint256 amount, uint256 rewardDebt, uint256 bonusDebt, address fundedBy) = IFairLaunch(rabbitStaking).userInfo(pid, address(this));
-			uint256 userAmount = IFairLaunch(rabbitStaking).getUserAmount(address(this));
-			uint256 balance = balanceOf();
-
-			console.log("balance %s", balance);
-			console.log("amount %s", amount);
-			console.log("userAmount %s", userAmount);
 		}
     }
 
@@ -116,25 +104,44 @@ contract StrategyRabbitVault is StratManager, FeeManager, GasThrottler {
      */
     function withdraw(uint256 _amount) external {
         require(msg.sender == vault, "!vault");
+		console.log("&&&&&&&&&&&&&&&&&&&& withdraw $$$$$$$$$$$$$$$$$$");
+
 		console.log("strat withdraw %s", _amount);
 		uint256 ibTokensToWithdraw = wantToIBToken(_amount);
 		console.log("ibTokensToWithdraw: %s", ibTokensToWithdraw);
 
         uint256 ibTokensInContract = IERC20(ibToken).balanceOf(address(this));
+		console.log("ibTokensInContract: %s", ibTokensInContract);
 
 		// If not enough IB Tokens in contract, remove some from farm
         if (ibTokensInContract < _amount) {
-            IFairLaunch(rabbitStaking).withdraw(address(this), pid, ibTokensToWithdraw.sub(ibTokensInContract));			
-            ibTokensInContract = IERC20(want).balanceOf(address(this));
+			console.log("If not enough IB Tokens in contract, remove some from farm");
+			uint256 ibTokensToWithdrawFromFairLaunch = ibTokensToWithdraw.sub(ibTokensInContract);
+			console.log("ibTokensToWithdrawFromFairLaunch: %s", ibTokensToWithdrawFromFairLaunch);
+            IFairLaunch(rabbitStaking).withdraw(address(this), pid, ibTokensToWithdrawFromFairLaunch);			
+            ibTokensInContract = IERC20(ibToken).balanceOf(address(this));
+			console.log("ibTokensInContract: %s", ibTokensInContract);
         }
 
         if (ibTokensInContract > _amount) {
+			console.log("ibTokensInContract > _amount");
             ibTokensInContract = _amount;
         }
 
 		// Swap ib Tokens for want tokens
+		console.log("ibTokensInContract: %s", ibTokensInContract);
+		uint256 wantTokensInContract = IERC20(want).balanceOf(address(this));	
+
+		console.log("wantTokensInContract: %s", wantTokensInContract);	
 		IRabbitBank(rabbitVault).withdraw(want, ibTokensInContract);
+
+		wantTokensInContract = IERC20(want).balanceOf(address(this));	
+		console.log("wantTokensInContract: %s", wantTokensInContract);
+
+		console.log("Transfering %s to %s", vault, _amount);
 		IERC20(want).safeTransfer(vault, _amount);        
+
+		console.log("&&&&&&&&&&&&&&&&&&&& withdraw $$$$$$$$$$$$$$$$$$");
     }
 
     /**
@@ -185,14 +192,25 @@ contract StrategyRabbitVault is StratManager, FeeManager, GasThrottler {
     // it calculates how much 'want' the strategy has working in the farm.
     function balanceOfPool() public view returns (uint256) {
 
+		console.log("*************** BALANCEOFPOOL ********************");
 		uint256 totalIbTokens = IERC20(ibToken).totalSupply();		
+		console.log("totalIbTokens: %s", totalIbTokens);
 		(uint256 amount, ,, ) = IFairLaunch(rabbitStaking).userInfo(pid, address(this));
+		console.log("amount: %s", amount);
+
 		(, , ,  ,  ,  uint256 totalVal, uint256 totalDebt , , uint256 totalReserve,) = IRabbitBank(rabbitVault).banks(want);
-		uint256 totalWant = totalVal.add(totalReserve).sub(totalDebt);
-		uint256 balanceOfPool = totalIbTokens == 0 ? 0 : amount.div(totalIbTokens).mul(totalWant);       
+		console.log("totalVal: %s", totalVal);
+		console.log("totalDebt: %s", totalDebt);
+		console.log("totalReserve: %s", totalReserve);
+		
+		uint256 totalWant = totalVal == 0 ? 0 : totalVal.add(totalReserve).sub(totalDebt);
+		console.log("totalWant: %s", totalWant);
+		console.log("%s .mul(1e18).div( %s ).mul( %s )", amount, totalIbTokens, totalWant);
+		uint256 balOfPool = totalIbTokens == 0 ? 0 : amount.mul(1e18).div(totalIbTokens).mul(totalWant).div(1e18);
+		console.log("balOfPool: %s", balOfPool);
+		console.log("*************** BALANCEOFPOOL ********************");
 
-
-		return 	balanceOfPool;
+		return balOfPool;
     }
 
     function getPricePerFullShare() public view returns (uint256) {
@@ -203,8 +221,9 @@ contract StrategyRabbitVault is StratManager, FeeManager, GasThrottler {
     // called as part of strat migration. Sends all the available funds back to the vault.
     function retireStrat() external {
         require(msg.sender == vault, "!vault");
-
-        // IRabbitVault(rabbitStaking).emergencyWithdraw();
+		IFairLaunch(rabbitStaking).emergencyWithdraw(pid);
+		uint256 ibTokenBalance = IERC20(ibToken).balanceOf(address(this));
+        IRabbitBank(rabbitVault).withdraw(want, ibTokenBalance);
 
         uint256 pairBal = IERC20(want).balanceOf(address(this));
         IERC20(want).transfer(vault, pairBal);
@@ -212,9 +231,14 @@ contract StrategyRabbitVault is StratManager, FeeManager, GasThrottler {
 
     // pauses deposits and withdraws all funds from third party systems.
     function panic() public onlyManager {
-        pause();
-       // IRabbitVault(rabbitStaking).emergencyWithdraw();
-    }
+		pause();
+		IFairLaunch(rabbitStaking).emergencyWithdraw(pid);
+		uint256 ibTokenBalance = IERC20(ibToken).balanceOf(address(this));
+		IRabbitBank(rabbitVault).withdraw(want, ibTokenBalance);
+
+		uint256 pairBal = IERC20(want).balanceOf(address(this));
+        
+	}
 
     // temporarily pauses the strategy
     function pause() public onlyManager {

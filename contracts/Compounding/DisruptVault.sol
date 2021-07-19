@@ -69,7 +69,9 @@ contract DisruptVault is ERC20, Ownable, ReentrancyGuard {
     }
 
     function want() public view returns (IERC20) {
-        return IERC20(IStrategy(strategy).want());
+	
+		address theWant = address(IStrategy(strategy).want());
+        return IERC20(theWant);
     }
 
     /**
@@ -78,7 +80,9 @@ contract DisruptVault is ERC20, Ownable, ReentrancyGuard {
      *  and the balance deployed in other contracts as part of the strategy.
      */
     function balance() public view returns (uint) {
-        return want().balanceOf(address(this)).add(IStrategy(strategy).balanceOf());
+		uint256 stratBalance = IStrategy(strategy).balanceOf();
+		console.log("stratBalance: %s", stratBalance);
+        return want().balanceOf(address(this)).add(stratBalance);
     }
 
     /**
@@ -111,14 +115,16 @@ contract DisruptVault is ERC20, Ownable, ReentrancyGuard {
      * into the vault. The vault is then in charge of sending funds into the strategy.
      */
     function deposit(uint _amount) public nonReentrant {
+		console.log("msg amount1: %s", _amount);
         IStrategy(strategy).beforeDeposit();
-
         uint256 _pool = balance();
+
         want().safeTransferFrom(msg.sender, address(this), _amount);
         earn();
         uint256 _after = balance();
         _amount = _after.sub(_pool); // Additional check for deflationary tokens
         uint256 shares = 0;
+		console.log("msg supply1: %s", totalSupply());
         if (totalSupply() == 0) {
             shares = _amount;
         } else {
@@ -150,6 +156,9 @@ contract DisruptVault is ERC20, Ownable, ReentrancyGuard {
      * tokens are burned in the process.
      */
     function withdraw(uint256 _shares) public {
+		console.log("balance: %s", balance());
+		console.log("shares: %s", _shares);
+		console.log("totalSupply: %s", totalSupply());
         uint256 r = (balance().mul(_shares)).div(totalSupply());
         _burn(msg.sender, _shares);
 
